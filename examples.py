@@ -1,4 +1,4 @@
-er# requires RPi_I2C_driver.py
+# requires RPi_I2C_driver.py
 import RPi_I2C_driver
 from time import *
 
