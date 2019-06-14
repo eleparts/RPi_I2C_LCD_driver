@@ -2,6 +2,11 @@
 import RPi_I2C_driver
 from time import *
 
+try:
+    unichr
+except NameError:
+    unichr = chr
+
 mylcd = RPi_I2C_driver.lcd()
 # test 2
 mylcd.lcd_display_string("RPi I2C test", 1)
