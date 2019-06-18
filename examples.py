@@ -7,7 +7,7 @@ try:
 except NameError:
     unichr = chr
 
-# RPi_I2C_driver.lcd( I2C address )
+# RPi_I2C_driver.lcd(I2C address)
 mylcd = RPi_I2C_driver.lcd(0x27)
 
 # test 2
@@ -94,7 +94,7 @@ pauza = 0.2 # define duration of sleep(x)
 # now draw cust. chars starting from col. 7 (pos. 6)
 
 pos = 6
-mylcd.lcd_display_string_pos(unichr(1),1,6)
+mylcd.lcd_display_string_pos(unichr(1),1,pos)
 sleep(pauza)
 
 mylcd.lcd_display_string_pos(unichr(2),1,pos)

@@ -10,6 +10,9 @@ Made available under GNU GENERAL PUBLIC LICENSE
 # By DenisFromHR (Denis Pleic)
 # 2015-02-10, ver 0.1
 
+# Arduino LiquidCrystal_I2C Implement functionality
+# 2019-06-18
+
 """
 #
 #
@@ -85,7 +88,7 @@ LCD_MOVELEFT = 0x00
 
 # flags for function set
 LCD_8BITMODE = 0x10
-LCD_4BITMODE = 0x00
+LCD_4BITMODE = 0x00  #I2C only 4bit
 LCD_2LINE = 0x08
 LCD_1LINE = 0x00
 LCD_5x10DOTS = 0x04
@@ -100,6 +103,11 @@ Rw = 0b00000010 # Read/Write bit
 Rs = 0b00000001 # Register select bit
 
 class lcd:
+
+   _Entry_mode_set = LCD_ENTRYMODESET         # 0x04
+   _Display_control = LCD_DISPLAYCONTROL      # 0x08
+   _Function_set = LCD_FUNCTIONSET            # 0x20
+
    #initializes objects and lcd
    def __init__(self, I2C_addr = None):
 
@@ -110,13 +118,20 @@ class lcd:
 
       self.lcd_write(0x03)
       self.lcd_write(0x03)
-      self.lcd_write(0x03)
-      self.lcd_write(0x02)
+      self.lcd_write(0x03)    # Return home
+      self.lcd_write(0x02)    # Return home
 
-      self.lcd_write(LCD_FUNCTIONSET | LCD_2LINE | LCD_5x8DOTS | LCD_4BITMODE)
-      self.lcd_write(LCD_DISPLAYCONTROL | LCD_DISPLAYON)
-      self.lcd_write(LCD_CLEARDISPLAY)
-      self.lcd_write(LCD_ENTRYMODESET | LCD_ENTRYLEFT)
+      self._Function_set = LCD_FUNCTIONSET | LCD_2LINE | LCD_5x8DOTS | LCD_4BITMODE  #0x28 #0b 0010 1000
+      self.lcd_write(self._Function_set)   
+
+      self._Display_control = LCD_DISPLAYCONTROL | LCD_DISPLAYON                     #0x0C #0b 0000 1100
+      self.lcd_write(self._Display_control)                         
+
+      self._Entry_mode_set = LCD_ENTRYMODESET | LCD_ENTRYLEFT                        #0x06 #0b 0000 0110
+      self.lcd_write(self._Entry_mode_set)
+
+      self.lcd_write(LCD_CLEARDISPLAY)                                              #0x01 #0b 0000 0001
+      
       sleep(0.2)
 
 
@@ -171,23 +186,99 @@ class lcd:
 
    # add custom characters (0 - 7)
    def lcd_load_custom_chars(self, fontdata):
-      self.lcd_write(0x40);
+      self.lcd_write(0x40)
       for char in fontdata:
          for line in char:
             self.lcd_write_char(line)         
          
    # define precise positioning (addition from the forum)
    def lcd_display_string_pos(self, string, line, pos):
-    if line == 1:
-      pos_new = pos
-    elif line == 2:
-      pos_new = 0x40 + pos
-    elif line == 3:
-      pos_new = 0x14 + pos
-    elif line == 4:
-      pos_new = 0x54 + pos
+      if line == 1:
+         pos_new = pos
+      elif line == 2:
+         pos_new = 0x40 + pos
+      elif line == 3:
+         pos_new = 0x14 + pos
+      elif line == 4:
+         pos_new = 0x54 + pos
 
-    self.lcd_write(0x80 + pos_new)
+      self.lcd_write(0x80 + pos_new)
 
-    for char in string:
-      self.lcd_write(ord(char), Rs)
+      for char in string:
+         self.lcd_write(ord(char), Rs)
+
+   '''
+   # LiquidCrystal Library
+   # https://www.arduino.cc/en/Reference/LiquidCrystal
+   '''
+
+   #LiquidCrystal()
+
+   #begin()
+   
+   # LCD 내용 지우기 & 커서위치 좌측 상단으로 이동
+   def clear(self):
+      self.lcd_write(LCD_CLEARDISPLAY)
+      sleep(1)
+
+   # 커서위치 좌측 상단으로 이동
+   def home(self):
+      self.lcd_write(LCD_RETURNHOME)
+      sleep(1)
+
+   #def setCursor():
+
+   # LCD에 글자 출력 (HEX, DEC, BIN 입력)
+   def write(self, data):
+      self.lcd_write(data, Rs)
+      
+   # LCD에 글자/문자열 출력 ("문자열 입력")   
+   def print(self, string):
+      for char in string:
+         self.lcd_write(ord(char), Rs)
+         #self.lcd_write_char(ord(char))
+
+   # Turns the underline cursor on/off
+   def cursor(self):
+      self._Display_control |= LCD_CURSORON
+      self.lcd_write(LCD_DISPLAYCONTROL | self._Display_control)
+      print(hex(self._Display_control))
+
+
+   def noCursor(self):
+      self._Display_control &= ~LCD_CURSORON
+      self.lcd_write(LCD_DISPLAYCONTROL | self._Display_control)
+
+   # Turn on and off the blinking cursor
+   def blink(self):
+      self._Display_control |= LCD_BLINKON
+      self.lcd_write(LCD_DISPLAYCONTROL | self._Display_control)
+
+   def noBlink(self):
+      self._Display_control &= ~LCD_BLINKON
+      self.lcd_write(LCD_DISPLAYCONTROL | self._Display_control)
+
+   # Turn the display on/off (quickly)
+   def display(self):
+      self._Display_control |= LCD_DISPLAYON
+      self.lcd_write(LCD_DISPLAYCONTROL | self._Display_control)
+
+   def noDisplay(self):
+      self._Display_control &= ~LCD_DISPLAYON
+      self.lcd_write(LCD_DISPLAYCONTROL | self._Display_control)
+
+'''
+   def scrollDisplayLeft():
+
+   def scrollDisplayRight():
+
+   def autoscroll():
+
+   def noAutoscroll():
+
+   def leftToRight():
+
+   def rightToLeft():
+
+   def createChar():
+'''
