@@ -11,12 +11,12 @@ Made available under GNU GENERAL PUBLIC LICENSE
 # 2015-02-10, ver 0.1
 
 # Arduino LiquidCrystal_I2C Implement functionality
+# https://www.arduino.cc/en/Reference/LiquidCrystal
 # By eleparts (yeon)
 # 1602 I2C LCD : https://www.eleparts.co.kr/EPXHVBKK
-# 2019-06-18 
+# 2019-06-20
 
 """
-#
 #
 import smbus
 from time import *
@@ -110,31 +110,52 @@ class lcd:
    _Display_control = LCD_DISPLAYCONTROL      # 0x08
    _Function_set = LCD_FUNCTIONSET            # 0x20
 
+   _row_offsets = [0x00, 0x40, 0x00, 0x40]
+   _begin_set = 0x00
+
    _numlines = 2 # line 
 
-   #initializes objects and lcd
-   def __init__(self, I2C_addr = None):
-
+   # initializes objects and lcd
+   # default 0x27, 16 x 02, 5x8 Dot(0x00)
+   def __init__(self, I2C_addr = None, cols = 16, lines = 2, dotsize = LCD_5x8DOTS):
+      
       if I2C_addr is None:
          I2C_addr = ADDRESS
+
+      # cols
+      self.setRowOffsets(0x00, 0x40, 0x00 + cols, 0x40 + cols)
+      # line (row)
+      if (lines > 1) :
+         self._begin_set |= LCD_2LINE
+      else: 
+         self._begin_set |= LCD_1LINE
+
+      self._numlines = lines
+
+      # dotsize
+      if ((dotsize != LCD_5x8DOTS) and (lines == 1)):
+         self._begin_set |= LCD_5x10DOTS
+      else:
+         self._begin_set |= LCD_5x8DOTS
+
 
       self.lcd_device = i2c_device(I2C_addr)
 
       self.lcd_write(0x03)
       self.lcd_write(0x03)
-      self.lcd_write(0x03)    # Return home
-      self.lcd_write(0x02)    # Return home
+      self.lcd_write(0x03)  
+      self.lcd_write(0x02)   
 
-      self._Function_set = LCD_FUNCTIONSET | LCD_2LINE | LCD_5x8DOTS | LCD_4BITMODE  #0x28 #0b 0010 1000
+      self._Function_set = LCD_FUNCTIONSET | self._begin_set | LCD_4BITMODE
       self.lcd_write(self._Function_set)   
 
-      self._Display_control = LCD_DISPLAYCONTROL | LCD_DISPLAYON                     #0x0C #0b 0000 1100
+      self._Display_control = LCD_DISPLAYCONTROL | LCD_DISPLAYON | LCD_CURSOROFF | LCD_BLINKOFF
       self.lcd_write(self._Display_control)                         
 
-      self._Entry_mode_set = LCD_ENTRYMODESET | LCD_ENTRYLEFT                        #0x06 #0b 0000 0110
+      self._Entry_mode_set = LCD_ENTRYMODESET | LCD_ENTRYLEFT | LCD_ENTRYSHIFTDECREMENT
       self.lcd_write(self._Entry_mode_set)
 
-      self.lcd_write(LCD_CLEARDISPLAY)                                               #0x01 #0b 0000 0001
+      self.lcd_write(LCD_CLEARDISPLAY)
       
       sleep(0.2)
 
@@ -198,13 +219,13 @@ class lcd:
    # define precise positioning (addition from the forum)
    def lcd_display_string_pos(self, string, line, pos):
       if line == 1:
-         pos_new = pos
+         pos_new = self._row_offsets[0] + pos
       elif line == 2:
-         pos_new = 0x40 + pos
+         pos_new = self._row_offsets[1] + pos
       elif line == 3:
-         pos_new = 0x14 + pos
+         pos_new = self._row_offsets[2] + pos
       elif line == 4:
-         pos_new = 0x54 + pos
+         pos_new = self._row_offsets[3] + pos
 
       self.lcd_write(0x80 + pos_new)
 
@@ -216,43 +237,62 @@ class lcd:
    # https://www.arduino.cc/en/Reference/LiquidCrystal
    '''
 
-   #LiquidCrystal()
-   #begin()
+   def setRowOffsets(self, row0, row1, row2, row3):
+      self._row_offsets[0] = row0
+      self._row_offsets[1] = row1
+      self._row_offsets[2] = row2
+      self._row_offsets[3] = row3
+
+   def command(self, data):
+      self.lcd_write(data)
+
+   
+   # >> User Function 
+
+   ### RPi_I2C_driver.lcd(I2C ADDR, LCD Col, LCD Row, Dot(5x8 == 0)) 
+   # LiquidCrystal() / begin()
+   # > mylcd = RPi_I2C_driver.lcd(0x27)
+   # > mylcd = RPi_I2C_driver.lcd(0x27, 16, 2)
    
    # LCD 내용 지우기 & 커서위치 좌측 상단으로 이동
    def clear(self):
-      self.lcd_write(LCD_CLEARDISPLAY)
+      self.command(LCD_CLEARDISPLAY)
       sleep(1)
 
    # 커서위치 좌측 상단으로 이동
    def home(self):
-      self.lcd_write(LCD_RETURNHOME)
+      self.command(LCD_RETURNHOME)
       sleep(1)
 
    # 커서위치 이동 home : (0,0)
    def setCursor(self, col, row):
       if row == 0:
-         row_value = 0x00
+         row_value = self._row_offsets[0]
       elif row == 1:
-         row_value = 0x40
+         row_value = self._row_offsets[1]
       elif row == 2:
-         row_value = 0x14
+         row_value = self._row_offsets[2]
       elif row == 3:
-         row_value = 0x54
+         row_value = self._row_offsets[3]
       else:
          row_value = 0x00
 
       if row > self._numlines:
          row = self._numlines-1    # we count rows starting 0
       
-      self.lcd_write(LCD_SETDDRAMADDR | (row_value  + col))
+      self.command(LCD_SETDDRAMADDR | (row_value  + col))
 
    # LCD에 글자 출력 (HEX, DEC, BIN 입력)
-   def write(self, data):
-      self.lcd_write(data, Rs)
-      
-   # LCD에 글자/문자열 출력 ("문자열 입력")   
+   def write(self, data, delay = 0):
+      try: 
+         self.lcd_write(data, Rs)
+         sleep(delay)
+      except TypeError:
+         self.print(data, delay)
+
+   # LCD에 글자/문자열 출력
    def print(self, string, delay = 0):
+      string = str(string)
 
       for char in string:
          self.lcd_write(ord(char), Rs)
@@ -263,58 +303,58 @@ class lcd:
    # Turns the underline cursor on/off
    def cursor(self):
       self._Display_control |= LCD_CURSORON
-      self.lcd_write(LCD_DISPLAYCONTROL | self._Display_control)
-      print(hex(self._Display_control))
+      self.command(LCD_DISPLAYCONTROL | self._Display_control)
+  
 
 
    def noCursor(self):
       self._Display_control &= ~LCD_CURSORON
-      self.lcd_write(LCD_DISPLAYCONTROL | self._Display_control)
+      self.command(LCD_DISPLAYCONTROL | self._Display_control)
 
    # Turn on and off the blinking cursor
    def blink(self):
       self._Display_control |= LCD_BLINKON
-      self.lcd_write(LCD_DISPLAYCONTROL | self._Display_control)
+      self.command(LCD_DISPLAYCONTROL | self._Display_control)
 
    def noBlink(self):
       self._Display_control &= ~LCD_BLINKON
-      self.lcd_write(LCD_DISPLAYCONTROL | self._Display_control)
+      self.command(LCD_DISPLAYCONTROL | self._Display_control)
 
    # Turn the display on/off (quickly)
    def display(self):
       self._Display_control |= LCD_DISPLAYON
-      self.lcd_write(LCD_DISPLAYCONTROL | self._Display_control)
+      self.command(LCD_DISPLAYCONTROL | self._Display_control)
 
    def noDisplay(self):
       self._Display_control &= ~LCD_DISPLAYON
-      self.lcd_write(LCD_DISPLAYCONTROL | self._Display_control)
+      self.command(LCD_DISPLAYCONTROL | self._Display_control)
 
    # These commands scroll the display without changing the RAM
    def scrollDisplayLeft(self):
-      self.lcd_write(LCD_CURSORSHIFT | LCD_DISPLAYMOVE | LCD_MOVELEFT)
+      self.command(LCD_CURSORSHIFT | LCD_DISPLAYMOVE | LCD_MOVELEFT)
 
    def scrollDisplayRight(self):
-      self.lcd_write(LCD_CURSORSHIFT | LCD_DISPLAYMOVE | LCD_MOVERIGHT)
+      self.command(LCD_CURSORSHIFT | LCD_DISPLAYMOVE | LCD_MOVERIGHT)
 
    # This will 'right justify' text from the cursor
    def autoscroll(self):
       self._Entry_mode_set |= LCD_ENTRYSHIFTINCREMENT
-      self.lcd_write(LCD_ENTRYMODESET | self._Entry_mode_set)
+      self.command(LCD_ENTRYMODESET | self._Entry_mode_set)
 
    # This will 'left justify' text from the cursor
    def noAutoscroll(self):
-      self._Entry_mode_set &= ~LCD_ENTRYSHIFTINCREMENT
-      self.lcd_write(LCD_ENTRYMODESET | self._Entry_mode_set)
+      self._Entry_mode_set &= ~LCD_ENTRYSHIFTINCREMENT         # LCD_ENTRYSHIFTDECREMENT
+      self.command(LCD_ENTRYMODESET | self._Entry_mode_set)
 
    # This is for text that flows Left to Right
    def leftToRight(self):
       self._Entry_mode_set |= LCD_ENTRYLEFT
-      self.lcd_write(LCD_ENTRYMODESET | self._Entry_mode_set)
+      self.command(LCD_ENTRYMODESET | self._Entry_mode_set)
 
    # This is for text that flows Right to Left
    def rightToLeft(self):
-      self._Entry_mode_set &= ~LCD_ENTRYLEFT 
-      self.lcd_write(LCD_ENTRYMODESET | self._Entry_mode_set)
+      self._Entry_mode_set &= ~LCD_ENTRYLEFT                   # LCD_ENTRYRIGHT
+      self.command(LCD_ENTRYMODESET | self._Entry_mode_set)
 
 '''
    def createChar():
