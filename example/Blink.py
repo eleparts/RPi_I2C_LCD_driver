@@ -1,13 +1,13 @@
 '''
-# RPi_I2C_driver - LiquidCrystal Library - Autoscroll
+# RPi_I2C_driver - LiquidCrystal Library - Blink
 #
 # This example has been implemented to enable Python in Raspberry Pi.
 # 
-# This sketch demonstrates the use of the autoscroll() and 
-# noAutoscroll() functions to make new text scroll or not.
+# This sketch prints "Hello World!" to the LCD and makes the
+# cursor block blink.
 #
 # This example code is in the public domain.
-# http://www.arduino.cc/en/Tutorial/LiquidCrystalAutoscroll
+# https://www.arduino.cc/en/Tutorial/LiquidCrystalBlink
 #
 # The circuit:
 # RaspberryPi       - 1602 I2C LCD
@@ -40,31 +40,14 @@ from time import *
 lcd = RPi_I2C_driver.lcd(0x27)
 # lcd = RPi_I2C_driver.lcd(0x27, 16, 2)
 
-# loop
+# Print a message to the LCD.
+lcd.print("hello, world!")
+
 while True:
-  # set the cursor to (0,0):
-  lcd.setCursor(0, 0)
 
-  # print from 0 to 9:
-  for thisChar in range(10):
-    lcd.print(thisChar)
-    # delay(500);
-    sleep(0.5)
-
-  # set the cursor to (16,1):
-  lcd.setCursor(16, 1)
-
-  # set the display to automatically scroll:
-  lcd.autoscroll()
-
-  # print from 0 to 9:
-  for thisChar in range(10):
-    lcd.print(thisChar)
-    # delay(500);
-    sleep(0.5)
-
-  # turn off automatic scrolling
-  lcd.noAutoscroll()
-
-  # clear screen for the next [while True:]
-  lcd.clear()
+  # Turn off the blinking cursor:
+  lcd.noBlink()
+  sleep(3)
+  # Turn on the blinking cursor:
+  lcd.blink()
+  sleep(3)

@@ -1,13 +1,14 @@
 '''
-# RPi_I2C_driver - LiquidCrystal Library - Autoscroll
+# RPi_I2C_driver - LiquidCrystal Library - display() and noDisplay()
 #
 # This example has been implemented to enable Python in Raspberry Pi.
 # 
-# This sketch demonstrates the use of the autoscroll() and 
-# noAutoscroll() functions to make new text scroll or not.
+# This sketch prints "Hello World!" to the LCD and uses the
+# display() and noDisplay() functions to turn on and off
+# the display.
 #
 # This example code is in the public domain.
-# http://www.arduino.cc/en/Tutorial/LiquidCrystalAutoscroll
+# http://www.arduino.cc/en/Tutorial/LiquidCrystalDisplay
 #
 # The circuit:
 # RaspberryPi       - 1602 I2C LCD
@@ -30,7 +31,7 @@
 # modified 7 Nov 2016
 # by Arturo Guadalupi
 # modified Python 20 June 2019
-# by eleparts (yeon) (https://www.eleparts.co.kr/)
+# by eleparts - yeon (https://www.eleparts.co.kr/)
 '''
 # include the library 
 import RPi_I2C_driver
@@ -38,33 +39,15 @@ from time import *
 
 # RPi_I2C_driver.lcd( I2C address )
 lcd = RPi_I2C_driver.lcd(0x27)
-# lcd = RPi_I2C_driver.lcd(0x27, 16, 2)
 
-# loop
+# Print a message to the LCD.
+lcd.print("hello, world!")
+
 while True:
-  # set the cursor to (0,0):
-  lcd.setCursor(0, 0)
 
-  # print from 0 to 9:
-  for thisChar in range(10):
-    lcd.print(thisChar)
-    # delay(500);
-    sleep(0.5)
-
-  # set the cursor to (16,1):
-  lcd.setCursor(16, 1)
-
-  # set the display to automatically scroll:
-  lcd.autoscroll()
-
-  # print from 0 to 9:
-  for thisChar in range(10):
-    lcd.print(thisChar)
-    # delay(500);
-    sleep(0.5)
-
-  # turn off automatic scrolling
-  lcd.noAutoscroll()
-
-  # clear screen for the next [while True:]
-  lcd.clear()
+  # Turn off the display:
+  lcd.noDisplay()
+  sleep(0.5)
+  # Turn on the display:
+  lcd.display()
+  sleep(0.5)
