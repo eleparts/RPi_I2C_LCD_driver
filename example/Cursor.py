@@ -31,7 +31,7 @@
 # modified 7 Nov 2016
 # by Arturo Guadalupi
 # modified Python 20 June 2019
-# by eleparts - yeon (https://www.eleparts.co.kr/)
+# by eleparts (yeon) (https://www.eleparts.co.kr/)
 '''
 # include the library 
 import RPi_I2C_driver
