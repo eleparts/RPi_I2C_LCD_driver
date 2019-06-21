@@ -14,8 +14,8 @@ Made available under GNU GENERAL PUBLIC LICENSE
 # https://www.arduino.cc/en/Reference/LiquidCrystal
 # By eleparts (yeon)
 # 1602 I2C LCD : https://www.eleparts.co.kr/EPXHVBKK
-# 2019-06-20
-
+# 2019-06-21
+#
 """
 #
 import smbus
@@ -182,7 +182,6 @@ class lcd:
       self.lcd_write_four_bits(mode | (charvalue & 0xF0))
       self.lcd_write_four_bits(mode | ((charvalue << 4) & 0xF0))
   
-
    # put string function
    def lcd_display_string(self, string, line):
       if line == 1:
@@ -356,6 +355,10 @@ class lcd:
       self._Entry_mode_set &= ~LCD_ENTRYLEFT                   # LCD_ENTRYRIGHT
       self.command(LCD_ENTRYMODESET | self._Entry_mode_set)
 
-'''
-   def createChar():
-'''
+   # Allows us to fill the first 8 CGRAM locations
+   # with custom characters
+   def createChar(self, location, charmap = []):
+      location &= 0x7 # we only have 8 locations 0-7
+      self.command(LCD_SETCGRAMADDR | (location << 3))
+      for i in range(8):
+         self.write(charmap[i])
