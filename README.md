@@ -30,6 +30,19 @@ I2C (1602) LCD 모듈을  Raspberry PI에서 [Arduino LiquidCrystal_I2C](https:/
 
 작성중  
   
+## 회로 구성  
+  
+### 3.3V LCD 직접 연결  
+  
+3.3V I2C LCD.png
+  
+![3.3V I2C LCD](./circuit_image/3.3V_I2C_LCD.png)  
+  
+### 5V LCD Level converter 이용하여 연결  
+  
+5V I2C LCD Logic Level converter.png
+
+![5V I2C LCD Logic Level converter](./circuit_image/5V_I2C_LCD_Logic_Level_converter.png)  
   
   
 ## 함수 설명  
