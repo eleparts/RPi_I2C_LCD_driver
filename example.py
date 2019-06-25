@@ -18,6 +18,7 @@ import RPi_I2C_driver
 from time import *
 
 # make custom characters - eleparts logo:
+# https://maxpromer.github.io/LCD-Character-Creator/
 eleLogo1 = [
   0b00000,
   0b00000,
@@ -127,7 +128,6 @@ lcd.clear()
 
 # Turn off the cursor:
 lcd.noCursor()
-
 
 lcd.print("eleparts")
 
