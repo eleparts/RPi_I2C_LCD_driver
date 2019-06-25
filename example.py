@@ -9,9 +9,10 @@
 # GPIO03 (PIN5/SCL) - SCL
 # 
 # ※ I2C Enable is required in Raspberry Pi configuration.
-# ※ When the voltage of the LCD / I2C board is 5V, use of 3.3V Level convector is recommended.
+# ※ When the voltage of the LCD / I2C board is 5V, use of 3.3V logic level converter is recommended.
 
 # by eleparts (yeon) (https://www.eleparts.co.kr/)
+# 2019-06-25
 '''
 # include the library 
 import RPi_I2C_driver

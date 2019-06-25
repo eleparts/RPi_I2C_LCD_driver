@@ -22,7 +22,7 @@
 # Modified to not use poterntiometer and analog input.
 # 
 # ※ I2C Enable is required in Raspberry Pi configuration.
-# ※ When the voltage of the LCD / I2C board is 5V, use of 3.3V Level convector is recommended.
+# ※ When the voltage of the LCD / I2C board is 5V, use of 3.3V logic level converter is recommended.
 #
  created 21 Mar 2011
  by Tom Igoe

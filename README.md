@@ -11,7 +11,7 @@ I2C (1602) LCD 모듈을  Raspberry PI에서 [Arduino LiquidCrystal_I2C](https:/
 - 관련 제품  
 [LCD 1602 llC I2C모듈(5V)](https://www.eleparts.co.kr/EPXHVBKK)  
 [5V-3.3V Logic Level converter](https://www.eleparts.co.kr)  
-
+  
 ## 필수 설정 & 설치 라이브러리  
 
 - Raspberry Pi Configuration -> Enable I2C  
@@ -24,13 +24,14 @@ I2C (1602) LCD 모듈을  Raspberry PI에서 [Arduino LiquidCrystal_I2C](https:/
 - I2C adress 확인 명령어 - LCD연결 후 입력  
 
 > i2cdetect -y 1  
-
+  
+  
 ### start.sh  
 
 작성중  
-
-
-
+  
+  
+  
 ## 함수 설명  
 
 - LiquidCrystal()  
