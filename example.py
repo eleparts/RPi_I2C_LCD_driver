@@ -18,97 +18,171 @@ import RPi_I2C_driver
 from time import *
 
 # make custom characters - eleparts logo:
-elelogo_1 = [
+eleLogo1 = [
   0b00000,
   0b00000,
-  0b00000,
-  0b01101,
-  0b10011,
-  0b10010,
+  0b00110,
+  0b01001,
+  0b10001,
   0b10000,
-  0b01100
+  0b10000,
+  0b01110
 ]
 
-elelogo_2 = [
+eleLogo2 = [
+  0b00011,
+  0b00100,
+  0b01001,
+  0b01010,
+  0b10010,
+  0b10001,
   0b00000,
-  0b01100,
-  0b10101,
-  0b01010,
-  0b01010,
-  0b01110,
+  0b00000
+]
+eleLogo3 = [
+  0b00000,
+  0b10000,
+  0b00110,
+  0b01001,
+  0b01000,
+  0b10000,
   0b00000,
   0b00000
 ]
 
-elelogo_3 = [
+eleLogo4 = [
+  0b00000,
   0b00000,
   0b00000,
   0b00000,
   0b10000,
+  0b01000,
+  0b01000,
+  0b10000
+]
+
+eleLogo5 = [
+  0b00010,
+  0b00100,
+  0b00100,
+  0b00010,
+  0b00001,
+  0b00000,
+  0b00000,
+  0b00000
+]
+
+eleLogo6 = [
+  0b00000,
+  0b00000,
+  0b00011,
+  0b00100,
+  0b00100,
+  0b11001,
+  0b00010,
+  0b00001
+]
+
+eleLogo7 = [
+  0b00000,
+  0b00000,
+  0b00000,
+  0b10011,
+  0b10101,
+  0b00100,
+  0b01000,
+  0b10000
+]
+
+eleLogo8 = [
   0b11000,
   0b00100,
   0b00010,
-  0b00100
-]
-
-elelogo_4 = [
-  0b00100,
-  0b00100,
-  0b00110,
   0b00010,
-  0b00001,
-  0b00000,
-  0b00000,
-  0b00000
-]
-
-elelogo_5 = [
-  0b00000,
-  0b11100,
-  0b10100,
-  0b10100,
-  0b01100,
-  0b01001,
-  0b00110,
-  0b00000
-]
-
-elelogo_6 = [
-  0b00110,
-  0b00001,
-  0b00001,
-  0b01001,
-  0b10110,
-  0b00000,
+  0b00100,
+  0b11000,
   0b00000,
   0b00000
 ]
 
+##### START EXAMPLE #####
 
 # RPi_I2C_driver.lcd( I2C address )
 lcd = RPi_I2C_driver.lcd(0x27)
 
-# create a new character
-lcd.createChar(0, elelogo_1)
-# create a new character
-lcd.createChar(1, elelogo_2)
-# create a new character
-lcd.createChar(2, elelogo_3)
-# create a new character
-lcd.createChar(3, elelogo_4)
-# create a new character
-lcd.createChar(4, elelogo_5)
-# create a new character
-lcd.createChar(5, elelogo_6)
+# Turn on the cursor:
+lcd.cursor()
 
-lcd.setCursor(0,0)
+# Print a message to the LCD.
+lcd.print("Hello")
 
+sleep(1)
+
+# At 0.5c second interval " World!!!" Print
+lcd.print(" World!!!", 0.5)
+
+sleep(2)
+
+lcd.clear()
+
+# Turn off the cursor:
+lcd.noCursor()
+
+
+lcd.print("eleparts")
+
+# set the cursor position:
+lcd.setCursor(5,1)
+lcd.print(".co.kr")
+
+# create a new character
+lcd.createChar(0, eleLogo1)
+lcd.createChar(1, eleLogo2)
+lcd.createChar(2, eleLogo3)
+lcd.createChar(3, eleLogo4)
+lcd.createChar(4, eleLogo5)
+lcd.createChar(5, eleLogo6)
+lcd.createChar(6, eleLogo7)
+lcd.createChar(7, eleLogo8)
+
+lcd.setCursor(12,0)
+
+# print 'createChar'
 lcd.write(0)
 lcd.write(1)
 lcd.write(2)
-
-lcd.setCursor(0,1)
-
 lcd.write(3)
+
+lcd.setCursor(12,1)
+
 lcd.write(4)
 lcd.write(5)
+lcd.write(6)
+lcd.write(7)
+
+sleep(2)
+
+lcd.setCursor(11,1)
+
+# Turn on the blinking cursor:
+lcd.blink()
+
+sleep(3)
+
+# screen moving
+for a in range(2):
+
+  for i in range(2):
+    # Move the screen to the right
+    lcd.scrollDisplayLeft()
+    sleep(0.4)
+
+  for i in range(4):
+    # Move the screen to the right
+    lcd.scrollDisplayRight()
+    sleep(0.4)
+
+  for i in range(2):
+    # Move the screen to the right
+    lcd.scrollDisplayLeft()
+    sleep(0.4)
