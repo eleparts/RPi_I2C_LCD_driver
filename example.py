@@ -101,12 +101,13 @@ lcd.createChar(4, elelogo_5)
 # create a new character
 lcd.createChar(5, elelogo_6)
 
+lcd.setCursor(0,0)
 
 lcd.write(0)
 lcd.write(1)
 lcd.write(2)
 
-lcd.setCursor(1,0)
+lcd.setCursor(0,1)
 
 lcd.write(3)
 lcd.write(4)
