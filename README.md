@@ -15,13 +15,14 @@ I2C (1602) LCD 모듈을  Raspberry PI에서 [Arduino LiquidCrystal_I2C](https:/
 ## 필수 설정 & 설치 라이브러리  
 
 - Raspberry Pi Configuration -> Enable I2C  
+라즈베리파이 설정에서 I2C를 꼭 Enable해 주어야 합니다.  
 
 > sudo apt-get install python-smbus  
 > sudo apt-get install python3-smbus  
 
-사용할 파이썬 버전에 맞춰 설치해 줍니다.  
+smbus를 사용할 파이썬 버전에 맞춰 설치해 줍니다.  
 
-- I2C adress 확인 명령어 - LCD연결 후 입력  
+- I2C adress 확인 명령어 - LCD연결 후 확인 가능  
 
 > i2cdetect -y 1  
   
