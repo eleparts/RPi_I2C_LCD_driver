@@ -28,20 +28,21 @@ I2C (1602) LCD 모듈을  Raspberry PI에서 [Arduino LiquidCrystal_I2C](https:/
   
 ### start.sh  
 
-작성중  
+별도의 라이브러리 등록 과정 없이 예제코드(example)를 실행하기 위해 드라이버 파일을 각 디렉토리에 복사해 줍니다  
+(라이브러리 등록을 할 경우 실행할 필요가 없습니다.)  
+  
+> chmod +x start.sh  
+> ./start.sh  
+  
   
 ## 회로 구성  
   
 ### 3.3V LCD 직접 연결  
   
-3.3V I2C LCD.png
-  
 ![3.3V I2C LCD](./circuit_image/3.3V_I2C_LCD.png)  
   
 ### 5V LCD Level converter 이용하여 연결  
   
-5V I2C LCD Logic Level converter.png
-
 ![5V I2C LCD Logic Level converter](./circuit_image/5V_I2C_LCD_Logic_Level_converter.png)  
   
   
