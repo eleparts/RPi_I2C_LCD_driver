@@ -21,90 +21,90 @@ from time import *
 # make custom characters - eleparts logo:
 # https://maxpromer.github.io/LCD-Character-Creator/
 eleLogo1 = [
-  0b00000,
-  0b00000,
-  0b00110,
-  0b01001,
-  0b10001,
-  0b10000,
-  0b10000,
-  0b01110
+    0b00000,
+    0b00000,
+    0b00110,
+    0b01001,
+    0b10001,
+    0b10000,
+    0b10000,
+    0b01110
 ]
 
 eleLogo2 = [
-  0b00011,
-  0b00100,
-  0b01001,
-  0b01010,
-  0b10010,
-  0b10001,
-  0b00000,
-  0b00000
+    0b00011,
+    0b00100,
+    0b01001,
+    0b01010,
+    0b10010,
+    0b10001,
+    0b00000,
+    0b00000
 ]
 eleLogo3 = [
-  0b00000,
-  0b10000,
-  0b00110,
-  0b01001,
-  0b01000,
-  0b10000,
-  0b00000,
-  0b00000
+    0b00000,
+    0b10000,
+    0b00110,
+    0b01001,
+    0b01000,
+    0b10000,
+    0b00000,
+    0b00000
 ]
 
 eleLogo4 = [
-  0b00000,
-  0b00000,
-  0b00000,
-  0b00000,
-  0b10000,
-  0b01000,
-  0b01000,
-  0b10000
+    0b00000,
+    0b00000,
+    0b00000,
+    0b00000,
+    0b10000,
+    0b01000,
+    0b01000,
+    0b10000
 ]
 
 eleLogo5 = [
-  0b00010,
-  0b00100,
-  0b00100,
-  0b00010,
-  0b00001,
-  0b00000,
-  0b00000,
-  0b00000
+    0b00010,
+    0b00100,
+    0b00100,
+    0b00010,
+    0b00001,
+    0b00000,
+    0b00000,
+    0b00000
 ]
 
 eleLogo6 = [
-  0b00000,
-  0b00000,
-  0b00011,
-  0b00100,
-  0b00100,
-  0b11001,
-  0b00010,
-  0b00001
+    0b00000,
+    0b00000,
+    0b00011,
+    0b00100,
+    0b00100,
+    0b11001,
+    0b00010,
+    0b00001
 ]
 
 eleLogo7 = [
-  0b00000,
-  0b00000,
-  0b00000,
-  0b10011,
-  0b10101,
-  0b00100,
-  0b01000,
-  0b10000
+    0b00000,
+    0b00000,
+    0b00000,
+    0b10011,
+    0b10101,
+    0b00100,
+    0b01000,
+    0b10000
 ]
 
 eleLogo8 = [
-  0b11000,
-  0b00100,
-  0b00010,
-  0b00010,
-  0b00100,
-  0b11000,
-  0b00000,
-  0b00000
+    0b11000,
+    0b00100,
+    0b00010,
+    0b00010,
+    0b00100,
+    0b11000,
+    0b00000,
+    0b00000
 ]
 
 ##### START EXAMPLE #####
@@ -173,17 +173,17 @@ sleep(3)
 # screen moving
 for a in range(2):
 
-  for i in range(2):
-    # Move the screen to the right
-    lcd.scrollDisplayLeft()
-    sleep(0.4)
+    for i in range(2):
+        # Move the screen to the right
+        lcd.scrollDisplayLeft()
+        sleep(0.4)
 
-  for i in range(4):
-    # Move the screen to the right
-    lcd.scrollDisplayRight()
-    sleep(0.4)
+    for i in range(4):
+        # Move the screen to the right
+        lcd.scrollDisplayRight()
+        sleep(0.4)
 
-  for i in range(2):
-    # Move the screen to the right
-    lcd.scrollDisplayLeft()
-    sleep(0.4)
+    for i in range(2):
+        # Move the screen to the right
+        lcd.scrollDisplayLeft()
+        sleep(0.4)

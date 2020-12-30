@@ -45,9 +45,9 @@ lcd.print("hello, world!")
 
 while True:
 
-  # Turn off the cursor:
-  lcd.noCursor()
-  sleep(0.5)
-  # Turn on the cursor:
-  lcd.cursor()
-  sleep(0.5)
+    # Turn off the cursor:
+    lcd.noCursor()
+    sleep(0.5)
+    # Turn on the cursor:
+    lcd.cursor()
+    sleep(0.5)

@@ -41,12 +41,12 @@ lcd = RPi_I2C_driver.lcd(0x27)
 
 while True:
 
-  # Enter data received
-  str = input()
+    # Enter data received
+    str = input()
 
-  # clear the screen
-  lcd.clear()
+    # clear the screen
+    lcd.clear()
 
-  # display each character to the LCD
-  lcd.print(str)
-  
+    # display each character to the LCD
+    lcd.print(str)
+    

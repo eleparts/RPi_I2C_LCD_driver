@@ -47,32 +47,32 @@ sleep(1)
 
 while True:
 
-  # scroll 13 positions (string length) to the left
-  # to move it offscreen left:
-  for i in range(13) :
-    # scroll one position left:
-    lcd.scrollDisplayLeft()
-    # wait a bit:
-    sleep(0.15)
-  
+    # scroll 13 positions (string length) to the left
+    # to move it offscreen left:
+    for i in range(13) :
+        # scroll one position left:
+        lcd.scrollDisplayLeft()
+        # wait a bit:
+        sleep(0.15)
+    
 
-  # scroll 29 positions (string length + display length) to the right
-  # to move it offscreen right:
-  for i in range(29) :
-    # scroll one position right:
-    lcd.scrollDisplayRight()
-    # wait a bit:
-    sleep(0.15)
-  
+    # scroll 29 positions (string length + display length) to the right
+    # to move it offscreen right:
+    for i in range(29) :
+        # scroll one position right:
+        lcd.scrollDisplayRight()
+        # wait a bit:
+        sleep(0.15)
+    
 
-  # scroll 16 positions (display length + string length) to the left
-  # to move it back to center:
-  for i in range(16) :
-    # scroll one position left:
-    lcd.scrollDisplayLeft()
-    # wait a bit:
-    sleep(0.15)
-  
+    # scroll 16 positions (display length + string length) to the left
+    # to move it back to center:
+    for i in range(16) :
+        # scroll one position left:
+        lcd.scrollDisplayLeft()
+        # wait a bit:
+        sleep(0.15)
+    
 
-  # delay at the end of the full loop:
-  sleep(1)
+    # delay at the end of the full loop:
+    sleep(1)

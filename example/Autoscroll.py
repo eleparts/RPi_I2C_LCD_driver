@@ -42,29 +42,29 @@ lcd = RPi_I2C_driver.lcd(0x27)
 
 # loop
 while True:
-  # set the cursor to (0,0):
-  lcd.setCursor(0, 0)
+    # set the cursor to (0,0):
+    lcd.setCursor(0, 0)
 
-  # print from 0 to 9:
-  for thisChar in range(10):
-    lcd.print(thisChar)
-    # delay(500);
-    sleep(0.5)
+    # print from 0 to 9:
+    for thisChar in range(10):
+        lcd.print(thisChar)
+        # delay(500);
+        sleep(0.5)
 
-  # set the cursor to (16,1):
-  lcd.setCursor(16, 1)
+    # set the cursor to (16,1):
+    lcd.setCursor(16, 1)
 
-  # set the display to automatically scroll:
-  lcd.autoscroll()
+    # set the display to automatically scroll:
+    lcd.autoscroll()
 
-  # print from 0 to 9:
-  for thisChar in range(10):
-    lcd.print(thisChar)
-    # delay(500);
-    sleep(0.5)
+    # print from 0 to 9:
+    for thisChar in range(10):
+        lcd.print(thisChar)
+        # delay(500);
+        sleep(0.5)
 
-  # turn off automatic scrolling
-  lcd.noAutoscroll()
+    # turn off automatic scrolling
+    lcd.noAutoscroll()
 
-  # clear screen for the next [while True:]
-  lcd.clear()
+    # clear screen for the next [while True:]
+    lcd.clear()

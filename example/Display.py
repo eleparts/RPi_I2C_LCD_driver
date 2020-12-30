@@ -45,9 +45,9 @@ lcd.print("hello, world!")
 
 while True:
 
-  # Turn off the display:
-  lcd.noDisplay()
-  sleep(0.5)
-  # Turn on the display:
-  lcd.display()
-  sleep(0.5)
+    # Turn off the display:
+    lcd.noDisplay()
+    sleep(0.5)
+    # Turn on the display:
+    lcd.display()
+    sleep(0.5)

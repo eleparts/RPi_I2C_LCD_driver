@@ -45,26 +45,26 @@ thisChar = 'a'
 
 while True:
 
-  # reverse directions at 'm':
-  if (thisChar == 'm') :
-    # go right for the next letter
-    lcd.rightToLeft()
-  
-  # reverse again at 's':
-  if (thisChar == 's') :
-    # go left for the next letter
-    lcd.leftToRight()
-  
-  # reset at 'z':
-  if (thisChar > 'z') :
-    # go to (0,0):
-    lcd.home()
-    # start again at 0
-    thisChar = 'a'
-  
-  # print the character
-  lcd.write(thisChar)
-  # wait a second:
-  sleep(1)
-  # Retrieve the ASCII code value of the character and store it as a character after +1
-  thisChar = chr(ord(thisChar) + 1)
+    # reverse directions at 'm':
+    if (thisChar == 'm') :
+        # go right for the next letter
+        lcd.rightToLeft()
+    
+    # reverse again at 's':
+    if (thisChar == 's') :
+        # go left for the next letter
+        lcd.leftToRight()
+    
+    # reset at 'z':
+    if (thisChar > 'z') :
+        # go to (0,0):
+        lcd.home()
+        # start again at 0
+        thisChar = 'a'
+    
+    # print the character
+    lcd.write(thisChar)
+    # wait a second:
+    sleep(1)
+    # Retrieve the ASCII code value of the character and store it as a character after +1
+    thisChar = chr(ord(thisChar) + 1)

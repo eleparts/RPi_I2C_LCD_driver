@@ -39,58 +39,58 @@ from time import *
 
 # make some custom characters:
 heart = [
-  0b00000,
-  0b01010,
-  0b11111,
-  0b11111,
-  0b11111,
-  0b01110,
-  0b00100,
-  0b00000
+    0b00000,
+    0b01010,
+    0b11111,
+    0b11111,
+    0b11111,
+    0b01110,
+    0b00100,
+    0b00000
 ]
 
 smiley = [ 
-  0b00000,
-  0b00000,
-  0b01010,
-  0b00000,
-  0b00000,
-  0b10001,
-  0b01110,
-  0b00000
+    0b00000,
+    0b00000,
+    0b01010,
+    0b00000,
+    0b00000,
+    0b10001,
+    0b01110,
+    0b00000
 ]
 
 frownie = [
-  0b00000,
-  0b00000,
-  0b01010,
-  0b00000,
-  0b00000,
-  0b00000,
-  0b01110,
-  0b10001
+    0b00000,
+    0b00000,
+    0b01010,
+    0b00000,
+    0b00000,
+    0b00000,
+    0b01110,
+    0b10001
 ]
 
 armsDown = [
-  0b00100,
-  0b01010,
-  0b00100,
-  0b00100,
-  0b01110,
-  0b10101,
-  0b00100,
-  0b01010
+    0b00100,
+    0b01010,
+    0b00100,
+    0b00100,
+    0b01110,
+    0b10101,
+    0b00100,
+    0b01010
 ]
 
 armsUp = [
-  0b00100,
-  0b01010,
-  0b00100,
-  0b10101,
-  0b01110,
-  0b00100,
-  0b00100,
-  0b01010
+    0b00100,
+    0b01010,
+    0b00100,
+    0b10101,
+    0b01110,
+    0b00100,
+    0b00100,
+    0b01010
 ]
 
 # RPi_I2C_driver.lcd( I2C address )
@@ -119,12 +119,12 @@ lcd.write(1)
 
 while True:
 
-  lcd.setCursor(4, 1)
-  # draw the little man, arms down:
-  lcd.write(3)
-  sleep(0.3)
+    lcd.setCursor(4, 1)
+    # draw the little man, arms down:
+    lcd.write(3)
+    sleep(0.3)
 
-  lcd.setCursor(4, 1)
-  # draw him arms up:
-  lcd.write(4)
-  sleep(0.3)
+    lcd.setCursor(4, 1)
+    # draw him arms up:
+    lcd.write(4)
+    sleep(0.3)

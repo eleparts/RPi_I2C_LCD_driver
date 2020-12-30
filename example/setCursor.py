@@ -45,15 +45,15 @@ lcd = RPi_I2C_driver.lcd(0x27, numCols, numRows)
 
 while True:
 
-  # loop from ASCII 'a' to ASCII 'z':
-  for thisLetter in range(ord('a'), ord('z')):
-    # loop over the columns:
-    for thisRow in range(numRows):
-      # loop over the rows:
-      for thisCol in range(numCols):
-        # set the cursor position:
-        lcd.setCursor(thisCol, thisRow)
-        # print the letter:
-        lcd.write(thisLetter)
-        sleep(0.2)
+    # loop from ASCII 'a' to ASCII 'z':
+    for thisLetter in range(ord('a'), ord('z')):
+        # loop over the columns:
+        for thisRow in range(numRows):
+            # loop over the rows:
+            for thisCol in range(numCols):
+                # set the cursor position:
+                lcd.setCursor(thisCol, thisRow)
+                # print the letter:
+                lcd.write(thisLetter)
+                sleep(0.2)
 
